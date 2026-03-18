@@ -81,6 +81,10 @@ export class AuthService {
     return roles.some(role => this.hasRole(role));
   }
 
+  hasAllRoles(roles: string[]): boolean {
+    return roles.every(role => this.hasRole(role));
+  }
+
   getToken(): string | null {
     return localStorage.getItem(this.TOKEN_KEY);
   }
