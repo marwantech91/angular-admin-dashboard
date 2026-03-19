@@ -108,6 +108,18 @@ export class AuthService {
     }
   }
 
+  getTokenExpiresIn(): number {
+    const token = this.getToken();
+    if (!token) return 0;
+
+    try {
+      const payload = JSON.parse(atob(token.split('.')[1]));
+      return Math.max(0, payload.exp * 1000 - Date.now());
+    } catch {
+      return 0;
+    }
+  }
+
   private loadStoredUser(): User | null {
     const stored = localStorage.getItem(this.USER_KEY);
     return stored ? JSON.parse(stored) : null;
